@@ -68,35 +68,6 @@ MySQL Database
 
 ---
 
-## ▶ How To Run
 
-```bash
-mvn clean compile
-mvn test
-
-## 🔒 Security Highlights
-
-• AES encryption
-• OTP verification
-• Password hashing
-• SQL injection protection
-
-## 👨‍💻 Author
-
-Kumar Shantanu
-Java Developer | Software Developer Enthusiast
-
-## ⭐ Star this repo if you like it!
-
-
-Click **Commit new file**.
-
----
-
-# ✅ 2. FIX YOUR REPO CLEANLINESS (.gitignore)
-
-Click **Add file → Create new file**
-
-Name: .gitignore
 
 
