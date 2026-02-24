@@ -68,6 +68,78 @@ MySQL Database
 
 ---
 
+## ▶ How To Run
+
+```bash
+mvn clean compile
+mvn test
+
+Run Main.java from IDE.
+
+---
+
+## 🔒 Security Highlights
+
+• AES encryption
+• OTP verification
+• Password hashing
+• SQL injection protection
+
+## 👨‍💻 Author
+
+Shantanu Kumar
+Java Developer | Cybersecurity Enthusiast
+
+⭐ Star this repo if you like it!
+
+
+Click **Commit new file**.
+
+---
+
+# ✅ 2. FIX YOUR REPO CLEANLINESS (.gitignore)
+
+Click **Add file → Create new file**
+
+Name:
+
+
+.gitignore
+
+
+Paste:
+
+
+/.idea
+/target
+*.log
+*.class
+
+
+Commit.
+
+(This removes IDE junk and looks professional)
+
+---
+
+# ✅ 3. ADD REPO DESCRIPTION + TAGS
+
+Go to right side → **About ⚙**
+
+### Description:
+
+
+Secure Java Password Manager with AES encryption, OTP verification, MySQL, Maven, Log4j & JUnit
+
+
+### Topics (paste all):
+
+
+java mysql maven jdbc cybersecurity encryption password-manager junit log4j console-app
+
+
+Save.
+
 
 
 
