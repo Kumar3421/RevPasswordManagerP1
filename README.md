@@ -1,145 +1,145 @@
-# 🔐 RevPasswordManager
+# Rev Password Manager
 
-A secure Java-based Password Manager built using **Java 24, MySQL, JDBC, Maven, Log4j, and JUnit**.
-
-This project focuses on security-first design with AES encryption, OTP verification, hashed master passwords, and layered architecture.
+**Rev Password Manager** is a Command Line Interface (CLI) based password manager application written in Java 24. It provides a secure and centralized location to store, manage, and generate passwords for your online accounts.
 
 ---
 
 ## 🚀 Features
 
-✅ User Registration & Login  
-🔐 Master Password Protection  
-🛡 AES Encrypted Password Vault  
-🔍 Search Accounts  
-✏ Update/Delete (OTP Protected)  
-🎲 Strong Password Generator  
-📜 Log4j Logging  
-🧪 JUnit Testing  
+*   **User Management**
+    *   **Secure Registration**: Create a new account with your name, email, and master password.
+    *   **Secure Login**: Authenticate with your master password (which is securely hashed).
+*   **Password Vault**
+    *   **Add Passwords**: Store credentials with Account Name, Username, and Password (encrypted using AES).
+    *   **View Vault**: List all stored accounts and decrypted passwords to quickly retrieve them.
+    *   **Search**: Search for specific account credentials by name.
+*   **Security Features**
+    *   **Sensitive Action Barrier**: Prompt for Master Password re-verification before performing sensitive dashboard actions (Add Password, View Vault, Generate Password).
+    *   **Strong Password Validator**: Enforces password requirements to prevent weak master passwords.
+*   **Password Generator**
+    *   Generate strong, random passwords of any length you choose.
 
 ---
 
-## 🏗 Architecture (Layered Design)
+## 🛠️ Tech Stack
 
-UI Layer (Main)
-↓
-DAO Layer
-↓
-Utility Layer
-↓
-MySQL Database
-
+*   **Language**: [Java 24](https://www.oracle.com/java/technologies/)
+*   **Database**: [MySQL](https://www.mysql.com/)
+*   **Logging**: [Log4j 2](https://logging.apache.org/log4j/2.x/)
+*   **Testing**: [JUnit 5](https://junit.org/junit5/)
+*   **Security**: AES Encryption, SHA-based hashing (via custom utils).
+*   **Build Tool**: Maven
 
 ---
 
-## 🗄 Database Tables
+## 📋 Prerequisites
 
-### USERS
-- id (PK)
-- name
-- email (unique)
-- master_password
+Before running the application, ensure you have the following installed:
 
-### PASSWORD_ENTRIES
-- id (PK)
-- user_id (FK)
-- account_name
-- username
-- encrypted_password
-
-### SECURITY_QUESTIONS
-- id (PK)
-- user_id (FK)
-- question
-- encrypted_answer
+1.  **Java 24** or higher.
+2.  **MySQL Server** (running locally or remotely).
+3.  **Maven** (for managing dependencies and building).
 
 ---
 
-## ⚙ Tech Stack
+## 🗄️ Database Setup
 
-| Technology | Usage |
-|-----------|------|
-| Java 24 | Core logic |
-| MySQL | Database |
-| JDBC | Connectivity |
-| Maven | Build |
-| Log4j | Logging |
-| JUnit 5 | Testing |
+To run the application, you need to create the database and tables that match the application logic.
 
----
+### 1. Create the Database
 
-## ▶ How To Run
+Log in to your MySQL terminal and run:
 
-```bash
-mvn clean compile
-mvn test
+```sql
+CREATE DATABASE revpm;
+```
 
-Run Main.java from IDE.
+### 2. Create Tables
 
----
+Execute the following script to create the required tables:
 
-## 🔒 Security Highlights
+```sql
+USE revpm;
 
-• AES encryption
-• OTP verification
-• Password hashing
-• SQL injection protection
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    master_password VARCHAR(255) NOT NULL
+);
 
-## 👨‍💻 Author
+CREATE TABLE password_entries (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    account_name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    encrypted_password TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
-Shantanu Kumar
-Java Developer | Cybersecurity Enthusiast
+-- Optional/Extended tables for OTP and Security Questions
+CREATE TABLE otp_requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    otp_code VARCHAR(10),
+    expiry_time TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
-⭐ Star this repo if you like it!
-
-
-Click **Commit new file**.
-
----
-
-# ✅ 2. FIX YOUR REPO CLEANLINESS (.gitignore)
-
-Click **Add file → Create new file**
-
-Name:
-
-
-.gitignore
-
-
-Paste:
-
-
-/.idea
-/target
-*.log
-*.class
-
-
-Commit.
-
-(This removes IDE junk and looks professional)
+CREATE TABLE security_questions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    question VARCHAR(255),
+    encrypted_answer VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
 
 ---
 
-# ✅ 3. ADD REPO DESCRIPTION + TAGS
+## ⚙️ Configuration
 
-Go to right side → **About ⚙**
+Check the database connection details in the source code file:
+`src/main/java/com/revpm/config/DBConnection.java`
 
-### Description:
+Configure your application to connect to:
+*   **URL**: `jdbc:mysql://localhost:3306/revpm`
+*   **Username**: `YOUR_USERNAME`
+*   **Password**: `YOUR_PASSWORD`
 
+You may need to update these values to match your local MySQL configuration.
 
-Secure Java Password Manager with AES encryption, OTP verification, MySQL, Maven, Log4j & JUnit
+---
 
+## 🏃‍♂️ How to Run
 
-### Topics (paste all):
+1.  **Clone or Open the Project**:
+    Ensure you are in the project root directory (`RevPasswordManager`).
 
+2.  **Build the Project**:
+    Compile the Java classes using Maven:
+    ```bash
+    mvn clean compile
+    ```
 
-java mysql maven jdbc cybersecurity encryption password-manager junit log4j console-app
+3.  **Run the Application**:
+    Execute the main class using the `exec-maven-plugin`:
+    ```bash
+    mvn exec:java -Dexec.mainClass="com.revpm.Main"
+    ```
 
+---
 
-Save.
+## 📁 Project Structure
 
-
-
-
+```text
+RevPasswordManager
+├── src/main/java/com/revpm
+│   ├── Main.java               # Application Entry Point
+│   ├── config/DBConnection     # Database Connection Logic
+│   ├── dao                     # Data Access Objects (User, Password, etc.)
+│   └── util                    # Utility Classes (AES, Encryption, Validation, etc.)
+├── src/main/resources
+│   └── log4j2.xml              # Logger Configuration
+└── pom.xml                     # Maven Dependencies & Plugins
+```
